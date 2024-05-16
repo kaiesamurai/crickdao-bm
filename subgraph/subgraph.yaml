@@ -1,0 +1,44 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: ZkCricket
+    network: scroll-sepolia
+    source:
+      address: "0x8DecD86959b87c64Be4978029a27D19c3e5d49DE"
+      abi: ZkCricket
+      startBlock: 4159257
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PlayersMetadataUpdated
+        - PointsClaimed
+        - ResultsFetchFailed
+        - ResultsFetchInitiated
+        - ResultsPublished
+        - SquadRegistered
+        - GamePlayerIdRemappingSet
+      abis:
+        - name: ZkCricket
+          file: ./abis/ZkCricket.json
+      eventHandlers:
+        - event: PlayersMetadataUpdated(uint256,string[])
+          handler: handlePlayersMetadataUpdated
+        - event: PointsClaimed(uint256,address,uint256)
+          handler: handlePointsClaimed
+        - event: ResultsFetchFailed(uint256,bytes32,bytes)
+          handler: handleResultsFetchFailed
+        - event: ResultsFetchInitiated(uint256,bytes32)
+          handler: handleResultsFetchInitiated
+        - event: ResultsPublished(uint256,bytes32,string)
+          handler: handleResultsPublished
+        - event: SquadRegistered(uint256,bytes32,address)
+          handler: handleSquadRegistered
+        - event: GamePlayerIdRemappingSet(uint256,string)
+          handler: handleGamePlayerIdRemappingSet
+      file: ./src/zk-cricket.ts

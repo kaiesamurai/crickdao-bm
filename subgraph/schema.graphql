@@ -1,0 +1,91 @@
+type user @entity {
+  "the id of the user"
+  id: ID!
+
+  "the farcaster id of the user"
+  address: Bytes!
+
+  "the available time slots for the profile"
+  predictions: [prediction!]! @derivedFrom(field: "user")
+
+  "the selected time period options for booking calls"
+  claims: [claim!]! @derivedFrom(field: "user")
+
+  "the total points won by the user"
+  totalPointsWon: BigInt!
+
+  "the total games the user played"
+  totalGamesPlayed: BigInt!
+
+  "the total games in which the user claimed points"
+  totalGamesClaimed: BigInt!
+}
+
+type game @entity {
+  "the id of the game"
+  id: ID!
+
+  "the predictions of the users in the game"
+  predictions: [prediction!]! @derivedFrom(field: "game")
+
+  "the claims by users in this game"
+  claims: [claim!]! @derivedFrom(field: "game")
+
+  "the remapping of the player ids"
+  playerIdRemapping: String!
+
+  "start time of the prediction aka. when the remappings were set"
+  predictionsStartTime: BigInt!
+
+  "the time when the results are posted on-chain post-game via chainlink"
+  resultsPublishedTime: BigInt
+
+  "the results of the game hosted on IPFS via Pinata"
+  gameResults: String
+
+  "the merkle root of the points of all the players in the game"
+  pointsMerkleRoot: Bytes
+
+  "the transaction hash in which the player id remappings were updated"
+  transactionHash: Bytes!
+}
+
+type prediction @entity {
+  "the id of the prediction"
+  id: ID!
+
+  "the profile of the user"
+  user: user!
+
+  "the squad hash"
+  squadHash: Bytes!
+
+  "the gameweek of the prediction"
+  game: game!
+
+  "the claims of user who made the prediction"
+  claim: claim
+
+  "the transaction hash in which the prediction was created"
+  transactionHash: Bytes!
+}
+
+type claim @entity {
+  "the id of the points claim"
+  id: ID!
+
+  "the profile of the claimer"
+  user: user!
+
+  "the prediction of the user"
+  prediction: prediction!
+
+  "the game of the claim"
+  game: game!
+
+  "the points won by the user"
+  points: BigInt!
+
+  "the transaction hash in which the points were claimed"
+  transactionHash: Bytes!
+}
