@@ -1,5 +1,7 @@
 Title: CrickDAO - Decentralized Fantasy Cricket Platform
 
+https://zkricket.vercel.app/
+
 **Vision:**
 CrickDAO envisions a future where fantasy sports enthusiasts can engage in cricket gaming without compromising their privacy or security. By leveraging cutting-edge zero-knowledge proofs, CrickDAO ensures users can make squad selections without revealing their choices, thereby safeguarding sensitive information from potential hacking or misuse.
 
